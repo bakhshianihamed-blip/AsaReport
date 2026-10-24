@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#173d32">
+  <meta name="description" content="ثبت و ارسال گزارش روزانه پیمانکاران توسط سرپرست کارگاه">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <title>آسا | گزارش سرپرست کارگاه</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="top"><div class="brand"><span class="mark">آ</span><div><b>آسا</b><small>گزارش سرپرست کارگاه</small></div></div><span class="sync" id="saved-state">ذخیره روی گوشی</span></header>
+  <main>
+    <section class="hero"><span class="eyebrow">فرم روزانهٔ کارگاه</span><h1>گزارش امروز</h1><p>اطلاعات حضور را ثبت کنید و گزارش آماده را در گروه کاری بفرستید.</p></section>
+    <section class="card meta" aria-label="اطلاعات گزارش">
+      <div class="field"><label for="date">تاریخ شمسی گزارش</label><div class="date-row"><input id="date" type="text" inputmode="numeric" placeholder="۱۴۰۵/۰۷/۳۰" autocomplete="off" aria-describedby="date-hint"><button id="today" class="soft">امروز</button></div><small id="date-hint">تاریخ شمسی گوشی خودکار وارد می‌شود؛ قالب ورود: سال/ماه/روز</small></div>
+      <div class="field"><label for="project">پروژه</label><select id="project"><option value="">انتخاب پروژه</option></select></div>
+      <div class="field"><label for="supervisor">نام سرپرست کارگاه</label><input id="supervisor" placeholder="نام و نام خانوادگی" autocomplete="name"></div>
+      <div class="field"><label for="weather">وضعیت آب‌وهوا</label><select id="weather"><option value="">انتخاب وضعیت آب‌وهوا</option></select></div>
+    </section>
+    <section class="section-head"><div><span class="eyebrow">فهرست روز</span><h2>پیمانکاران کارگاه</h2></div><button id="add-row" class="soft add">＋ افزودن پیمانکار</button></section>
+    <div id="rows" class="rows"></div>
+    <button id="confirm" class="primary confirm">تأیید و آماده‌سازی گزارش</button>
+    <section id="share-panel" class="card share-panel" hidden>
+      <div class="share-title"><span class="check">✓</span><div><b>گزارش آمادهٔ ارسال است</b><small id="report-day"></small></div></div>
+      <label for="report-text">متن گزارش؛ مناسب ارسال در گروه بله</label><textarea id="report-text" rows="12" readonly></textarea>
+      <button id="share-text" class="primary">اشتراک گزارش متنی</button>
+      <button id="copy-text" class="soft full">کپی متن گزارش</button>
+      <label class="file-label">فایل گزارش برای بارگذاری در پنل مدیریت<small>فایل JSON شامل جزئیات گزارش و فهرست‌های لازم است.</small></label>
+      <button id="share-file" class="soft full">اشتراک فایل گزارش</button>
+      <button id="download-file" class="soft full">دریافت فایل گزارش</button>
+      <button id="edit-again" class="text-button">بازگشت و ویرایش گزارش</button>
+    </section>
+    <details class="setup card"><summary>راه‌اندازی و دریافت آخرین فهرست‌ها</summary><p>در پنل مدیریت، از صفحهٔ «اطلاعات پایه» گزینهٔ «دریافت فهرست سرپرست‌ها» را بزنید و فایل را اینجا بارگذاری کنید.</p><label class="soft upload">بارگذاری فهرست از پنل مدیریت<input type="file" id="catalog-file" accept=".json,application/json" hidden></label><div class="setup-actions"><button id="add-contractor" class="text-button">افزودن پیمانکار در این گوشی</button><button id="add-project" class="text-button">افزودن پروژه</button></div></details>
+    <p class="privacy">اطلاعات فرم به‌صورت محلی در همین گوشی ذخیره می‌شود. ارسال پیام یا فایل فقط پس از زدن دکمهٔ اشتراک و انتخاب برنامه انجام می‌شود.</p>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <template id="row-template"><article class="contractor-card"><div class="row-top"><span class="row-number"></span><button class="remove" type="button" aria-label="حذف پیمانکار">حذف</button></div><div class="field"><label>نام پیمانکار</label><select data-key="contractor"><option value="">انتخاب پیمانکار</option></select></div><div class="field"><label>تخصص</label><select data-key="specialty"><option value="">انتخاب تخصص</option></select></div><div class="field"><label>وضعیت امروز</label><div class="segmented"><button type="button" data-status="present" class="selected">حاضر</button><button type="button" data-status="absent">غایب</button></div></div><div class="field workers-field"><label>تعداد نیروی کار</label><input data-key="workers" type="number" min="1" max="10000" step="1" inputmode="numeric" value="1"></div><div class="field reason-field" hidden><label>علت عدم حضور</label><select data-key="reason"><option value="">انتخاب علت</option></select></div></article></template>
+  <script src="app.js"></script>
+  <script>if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});</script>
+</body>
+</html>
